@@ -10,15 +10,14 @@ import dbus
 class Main(object):
 	"""docstring for Main
 	main logging part of the program"""
-	last_input_time=time.time()
-	logging.basicConfig(filename='app_data.log',level=logging.INFO,format='%(asctime)s:%(message)s')
 
 	def __init__(self):
+		logging.basicConfig(filename='app_data.log',level=logging.INFO,format='%(asctime)s:%(message)s')
+		self.last_input_time=time.time()
 		self.event = threading.Event()
 		self.t1=threading.Thread(target=self.logger, args=(self.event,))
-		self.t2=threading.Thread(target=self.input_checker)
 		self.t1.start()
-		self.t2.start()
+		self.input_checker()
 
 	def is_media_playing(self):
 		"""this will check if the media file is playing or not and return true or false"""
@@ -35,7 +34,6 @@ class Main(object):
 	def movement(self,*args):
 		"""This will put the last time of the user"""
 		self.last_input_time=time.time()
-		print(self.last_input_time)
 		if not self.event.is_set():
 			self.event.set()
 
@@ -47,7 +45,6 @@ class Main(object):
 		        listener.join()
 
 	def logger(self,event):
-		check_pid=''
 		while True:
 			pid = subprocess.check_output(["xdotool", "getactivewindow", "getwindowpid"]).decode("utf-8").strip()
 			print(pid,psutil.Process(int(pid)).name())
@@ -56,8 +53,7 @@ class Main(object):
 				if not self.is_media_playing():
 					self.event.clear()  # clear event to pause the thread
 					self.event.wait()  # wait for event to be set
-			check_pid=pid
 			time.sleep(1)
 
 if __name__ == '__main__':
-	main=Main()
+	Main()
