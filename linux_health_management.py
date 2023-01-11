@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 from pynput.keyboard import Listener  as KeyboardListener
 from pynput.mouse    import Listener  as MouseListener
+from os.path import expanduser
 import threading
 import time
 import subprocess
@@ -12,7 +15,7 @@ class Main(object):
 	main logging part of the program"""
 
 	def __init__(self):
-		logging.basicConfig(filename='app_data.log',level=logging.INFO,format='%(asctime)s:%(message)s')
+		logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s:%(message)s')
 		self.last_input_time=time.time()
 		self.event = threading.Event()
 		self.t1=threading.Thread(target=self.logger, args=(self.event,))
@@ -47,13 +50,14 @@ class Main(object):
 	def logger(self,event):
 		while True:
 			pid = subprocess.check_output(["xdotool", "getactivewindow", "getwindowpid"]).decode("utf-8").strip()
-			print(pid,psutil.Process(int(pid)).name())
+			# print(pid,psutil.Process(int(pid)).name())
 			logging.info(psutil.Process(int(pid)).name())
-			if time.time()-self.last_input_time>2:
+			if time.time()-self.last_input_time>180:
 				if not self.is_media_playing():
 					self.event.clear()  # clear event to pause the thread
 					self.event.wait()  # wait for event to be set
 			time.sleep(1)
 
 if __name__ == '__main__':
+	time.sleep(5)
 	Main()
