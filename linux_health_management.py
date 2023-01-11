@@ -15,7 +15,12 @@ class Main(object):
 	main logging part of the program"""
 
 	def __init__(self):
-		logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s:%(message)s')
+		try:
+			with open(f'{expanduser("~")}/app_data.log',"x") as file:
+				file.write("DATE,TIME,APPLICATION\n")
+		except:
+			pass		
+		logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s,%(message)s',datefmt='%d-%m-%Y,%H:%M:%S')
 		self.last_input_time=time.time()
 		self.event = threading.Event()
 		self.t1=threading.Thread(target=self.logger, args=(self.event,))
@@ -59,5 +64,5 @@ class Main(object):
 			time.sleep(1)
 
 if __name__ == '__main__':
-	time.sleep(5)
+	time.sleep(10)
 	Main()
