@@ -15,17 +15,21 @@ class Main(object):
 	main logging part of the program"""
 
 	def __init__(self):
-		try:
-			with open(f'{expanduser("~")}/app_data.log',"x") as file:
-				file.write("DATE,TIME,APPLICATION\n")
-		except:
-			pass		
-		logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s,%(message)s',datefmt='%d-%m-%Y,%H:%M:%S')
-		self.last_input_time=time.time()
-		self.event = threading.Event()
-		self.t1=threading.Thread(target=self.logger, args=(self.event,))
-		self.t1.start()
-		self.input_checker()
+		while True:
+			try:
+				try:
+					with open(f'{expanduser("~")}/app_data.log',"x") as file:
+						file.write("DATE,TIME,APPLICATION\n")
+				except:
+					pass		
+				logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s,%(message)s',datefmt='%d-%m-%Y,%H:%M:%S')
+				self.last_input_time=time.time()
+				self.event = threading.Event()
+				self.t1=threading.Thread(target=self.logger, args=(self.event,))
+				self.t1.start()
+				self.input_checker()
+			except:
+				self.__init__()
 
 	def is_media_playing(self):
 		"""this will check if the media file is playing or not and return true or false"""
