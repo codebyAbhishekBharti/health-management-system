@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import pandas as pd
-import numpy as np
 from os.path import expanduser
 import time
 
@@ -59,5 +58,3 @@ if __name__ == '__main__':
 	m=Main()
 	# print(m.time_diff_finder('11:49:42','11:50:34'))
 	m.data_cleaner()
-
-# self.data_dict={'DATE':[],'START TIME':[],'END TIME':[],'USAGE':[],'APPLICATION':[]}
