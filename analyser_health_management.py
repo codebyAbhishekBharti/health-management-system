@@ -5,11 +5,6 @@ import numpy as np
 from os.path import expanduser
 import time
 
-# df = pd.read_csv('app_data.log')
-# print(df.head())
-# print(df)
-# print(df.to_string())
-
 class Main(object):
 	"""docstring for Main"""
 	def __init__(self):
@@ -23,7 +18,6 @@ class Main(object):
 	def time_diff_finder(self,initial_time,final_time):
 		# print(initial_time)
 		# print(final_time)
-		# exit()
 		initial_epoch = int(time.mktime(time.strptime(initial_time,self.time_format)))
 		final_epoch = int(time.mktime(time.strptime(final_time,self.time_format)))
 		return (final_epoch-initial_epoch)
