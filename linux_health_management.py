@@ -17,7 +17,7 @@ class Main(object):
 		while True:
 			try:   
 				"""Combining above while loop and this try except makes sure that the program recover from any mishappening and completely restarts the code"""
-				logging.basicConfig(filename='app_data.log',level=logging.INFO,format='%(asctime)s,%(message)s',datefmt='%d-%m-%Y,%H:%M:%S')  #sets the basic configuration for the logger file
+				logging.basicConfig(filename=f'{expanduser("~")}/app_data.log',level=logging.INFO,format='%(asctime)s,%(message)s',datefmt='%d-%m-%Y,%H:%M:%S')  #sets the basic configuration for the logger file
 				self.last_input_time=time.time()     #stores the data for last input time
 				self.event = threading.Event()       #creates threading event
 				self.t1=threading.Thread(target=self.logger, args=(self.event,))   #creating thread 1
