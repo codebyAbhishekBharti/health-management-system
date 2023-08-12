@@ -77,5 +77,9 @@ class Main(object):
 			time.sleep(self.log_interval_time)
 
 if __name__ == '__main__':
+	"""
+	install xdotool using this command if you not able to store the data getting error 13
+	sudo apt-get -y install xdotool
+	"""
 	time.sleep(5)  #initial time gap to make sure the program will perfectly
 	Main()    #calling main class
